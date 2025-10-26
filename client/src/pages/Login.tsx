@@ -89,7 +89,7 @@ const Login = () => {
                       Email Verification Required
                     </p>
                     <p className="text-sm text-orange-800">
-                      Please verify your email address before logging in. Check your inbox for the verification link.
+                      Please verify your email address ({userEmail}) before logging in. Check your inbox for the verification link.
                     </p>
                     <Button 
                       onClick={handleResendVerification}
