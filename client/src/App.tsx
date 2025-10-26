@@ -1,37 +1,3 @@
-// import { Routes, Route } from "react-router-dom";
-// import Home from "./pages/Home";
-// import Login from "./pages/Login";
-// import Signup from "./pages/Signup"
-// import ShowAllBooks from "./pages/ShowAllBooks"
-// import SellBook from "./pages/sellingForm";
-// import ProfilePage from "./pages/profile";
-// import "react-toastify/dist/ReactToastify.css";
-// import { ToastContainer } from "react-toastify";
-// import { ScrollToTop } from "./components/scrollToTop";
-// import ProtectedRoute from "./components/protectedRoutes";
-
-// function App() {
-//   return (
-//     <>
-//      {/* <ToastContainer position="top-center" autoClose={2000} /> */}
-//      <ToastContainer position="top-center" autoClose={2000} theme="colored" />
-//       <ScrollToTop />
-//     <Routes>
-//       <Route path="/" element={<Home />} />
-//      <Route path="/login" element={<Login />} />
-//      <Route path="/signup" element={<Signup />} />
-//      <Route path="/allbooks" element={<ShowAllBooks />} />
-//      <Route path="/sellbook" element={<SellBook />} />
-//     <Route path="/profile" element={ <ProtectedRoute><ProfilePage /></ProtectedRoute>}
-// />
-
-//      </Routes>
-//      </>
-//   );
-// }
-
-// export default App;
-
 import { Routes, Route } from "react-router-dom";
 import Home from "./pages/Home";
 import Login from "./pages/Login";
