@@ -8,8 +8,10 @@ const passport = require('passport');
 const cookieParser = require('cookie-parser');
 const authRoutes = require('./routes/authRoutes');
 const bookRoutes = require('./routes/bookRoutes');
+const { config } = require('dotenv');
 require('dotenv').config({ path: "./config/.env" });
 require("./config/passport");
+const PORT = 
 
 // Connect to DB
 connectDB();
@@ -18,7 +20,7 @@ const app = express();
 const server = http.createServer(app); 
 const io = new Server(server, {
   cors: {
-    origin: 'https://reread.onrender.com',
+    origin: 'https://reread.onrender.com', 
     methods: ['GET', 'POST', 'DELETE', 'PUT'],
     credentials: true
   }
@@ -49,3 +51,5 @@ io.on('connection', (socket) => {
 
 // Make io available in routes
 app.set('io', io);
+
+app.listen(process.env.PORT)
