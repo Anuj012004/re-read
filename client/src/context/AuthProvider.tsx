@@ -13,7 +13,6 @@ export default function AuthProvider({ children }: AuthProviderProps) {
   const [loading, setLoading] = useState(true);
 
   const refreshUser = async () => {
-    console.log(" Refreshing user...");
     try {
       setLoading(true);
       const currentUser = await getCurrentUser(); // This now returns user object directly
@@ -22,18 +21,11 @@ export default function AuthProvider({ children }: AuthProviderProps) {
       // Make sure we have name and email
       if (currentUser && currentUser.name && currentUser.email) {
         setUser(currentUser);
-        console.log(" User set:", {
-          name: currentUser.name,
-          email: currentUser.email,
-          verified: currentUser.isVerified,
-          createdAt: currentUser.createdAt
-        });
       } else {
         console.warn(" User data incomplete:", currentUser);
         setUser(null);
       }
     } catch (error: any) {
-      console.log(" No authenticated user:", error.response?.status);
       setUser(null);
     } finally {
       setLoading(false);
@@ -41,7 +33,6 @@ export default function AuthProvider({ children }: AuthProviderProps) {
   };
 
   const login = async (email: string, password: string) => {
-    console.log("Login attempt for:", email);
     try {
       setLoading(true);
       const response = await loginUser(email, password);
@@ -50,11 +41,6 @@ export default function AuthProvider({ children }: AuthProviderProps) {
       // Set user from login response immediately
       if (response.success && response.user) {
         setUser(response.user);
-        console.log(" User set from login:", {
-          name: response.user.name,
-          email: response.user.email,
-          verified: response.user.isVerified
-        });
       } else {
         console.error("Login response missing user data");
       }
