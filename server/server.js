@@ -11,7 +11,7 @@ const bookRoutes = require('./routes/bookRoutes');
 const { config } = require('dotenv');
 require('dotenv').config({ path: "./config/.env" });
 require("./config/passport");
-const PORT = 
+const PORT = process.env.PORT || 2121
 
 // Connect to DB
 connectDB();
@@ -52,4 +52,7 @@ io.on('connection', (socket) => {
 // Make io available in routes
 app.set('io', io);
 
-app.listen(process.env.PORT)
+server.listen(PORT, '0.0.0.0', () => {
+  console.log(`Server running on port ${PORT}`);
+  console.log(`Socket.IO ready`);
+});
