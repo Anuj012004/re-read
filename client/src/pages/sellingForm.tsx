@@ -22,8 +22,8 @@ import {
 } from "lucide-react";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import axios from "axios";
 import { useNavigate } from "react-router-dom";
+import api from "@/lib/axios";
 
 const SellBook = () => {
   const { user } = useAuth();
@@ -83,14 +83,13 @@ const SellBook = () => {
       formData.append("class", className);
       if (bookImage) formData.append("image", bookImage);
 
-      await axios.post(
-        "http://localhost:2121/api/books",
+      await api.post(
+        "/books",
         formData,
         {
           headers: {
             "Content-Type": "multipart/form-data",
           },
-          withCredentials: true,
         }
       );
 

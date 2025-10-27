@@ -1,7 +1,7 @@
 import axios from "axios";
 
 const api = axios.create({
-  baseURL: import.meta.env.VITE_API_URL || "http://localhost:2121/api",
+  baseURL: 'https://re-read.onrender.com/api',
   withCredentials: true,
 });
 

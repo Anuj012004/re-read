@@ -1,7 +1,7 @@
 import axios from 'axios';
 
 // Direct API URL - Backend running on port 2121
-const API_URL = 'http://localhost:2121';
+const API_URL = 'https://re-read.onrender.com';
 
 // Create axios instance with defaults
 const api = axios.create({

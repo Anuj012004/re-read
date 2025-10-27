@@ -22,7 +22,6 @@ function App() {
       <ToastContainer position="top-center" autoClose={2000} theme="colored" />
       <ScrollToTop />
       <Routes>
-        {/* Existing Routes */}
         <Route path="/" element={<Home />} />
         <Route path="/login" element={<Login />} />
         <Route path="/signup" element={<Signup />} />
@@ -38,9 +37,6 @@ function App() {
         />
         <Route path="/privacy-policy" element={<PrivacyPolicy />} />
         <Route path= "/aboutUS" element={<AboutUs />} />
-
-
-        {/* New Email Verification & Password Reset Routes */}
         <Route path="/verify-email/:token" element={<VerifyEmail />} />
         <Route path="/forgot-password" element={<ForgotPassword />} />
         <Route path="/reset-password/:token" element={<ResetPassword />} />
