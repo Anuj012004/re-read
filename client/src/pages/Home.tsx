@@ -1,6 +1,7 @@
 import type { JSX } from "react";
 import Navbar from "../components/Navbar";
 import Hero from "@/components/Hero";
+import Cards from "@/components/InfoCards"
 import SaveMoneySection from "@/components/SaveMoneySection";
 import { BooksShowcase } from "@/components/BooksShowcase";
 import Footer from "@/components/Footer";
@@ -24,6 +25,7 @@ export default function Home(): JSX.Element {
       <div>
         <Hero />
       </div>
+      < Cards />
       <SaveMoneySection />
       <div>
         <BooksShowcase 
@@ -33,5 +35,6 @@ export default function Home(): JSX.Element {
       </div>
       <Footer />
     </div>
+   
   );
 }

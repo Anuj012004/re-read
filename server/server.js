@@ -11,7 +11,10 @@ const bookRoutes = require('./routes/bookRoutes');
 const { config } = require('dotenv');
 require('dotenv').config({ path: "./config/.env" });
 require("./config/passport");
-const PORT = process.env.PORT || 2121
+const PORT = process.env.PORT
+const FRONTEND_URL = process.env.NODE_ENV === 'production' 
+  ? 'https://reread.onrender.com'
+  : 'http://localhost:5173';
 
 // Connect to DB
 connectDB();
@@ -20,7 +23,7 @@ const app = express();
 const server = http.createServer(app); 
 const io = new Server(server, {
   cors: {
-    origin: 'https://reread.onrender.com', 
+    origin: FRONTEND_URL,
     methods: ['GET', 'POST', 'DELETE', 'PUT'],
     credentials: true
   }
@@ -28,7 +31,7 @@ const io = new Server(server, {
 
 // Middleware
 app.use(cors({
-  origin: 'https://reread.onrender.com',
+  origin:FRONTEND_URL,
   credentials: true
 }));
 app.use(express.json());

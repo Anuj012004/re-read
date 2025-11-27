@@ -111,8 +111,6 @@ exports.verifyEmail = async (req, res) => {
         message: 'Invalid or expired verification token'
       });
     }
-
-    // Check if already verified (shouldn't happen, but just in case)
     if (user.isVerified) {
       return res.status(400).json({
         success: false,

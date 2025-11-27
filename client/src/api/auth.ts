@@ -1,20 +1,8 @@
-import axios from 'axios';
-
-// Direct API URL - Backend running on port 2121
-const API_URL = 'https://re-read.onrender.com';
-
-// Create axios instance with defaults
-const api = axios.create({
-  baseURL: API_URL,
-  withCredentials: true,
-  headers: {
-    'Content-Type': 'application/json'
-  }
-});
+import api from "@/lib/axios";
 
 // Register user
-export const registerUser = async (name: string, email: string, password: string) => {
-  const response = await api.post('/api/auth/register', { name, email, password });
+export const registerUser = async (name: string, email: string, password: string, confirmPassword: string) => {
+  const response = await api.post('/api/auth/register', { name, email, password, confirmPassword });
   return response.data;
 };
 

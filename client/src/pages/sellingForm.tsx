@@ -84,7 +84,7 @@ const SellBook = () => {
       if (bookImage) formData.append("image", bookImage);
 
       await api.post(
-        "/books",
+        "/api/books",
         formData,
         {
           headers: {
@@ -163,7 +163,7 @@ const SellBook = () => {
                       placeholder="Enter book title"
                       value={bookTitle}
                       onChange={(e) => setBookTitle(e.target.value)}
-                      className="pl-10 text-sm"
+                      className="pl-10 text-sm selection:bg-blue-500 selection:text-white"
                       required
                     />
                   </div>
@@ -182,7 +182,7 @@ const SellBook = () => {
                       placeholder="e.g., Mathematics, Physics"
                       value={subject}
                       onChange={(e) => setSubject(e.target.value)}
-                      className="pl-10 text-sm"
+                      className="pl-10 text-sm selection:bg-blue-500 selection:text-white"
                       required
                     />
                   </div>
@@ -201,7 +201,7 @@ const SellBook = () => {
                       placeholder="Enter author name"
                       value={author}
                       onChange={(e) => setAuthor(e.target.value)}
-                      className="pl-10 text-sm"
+                      className="pl-10 text-sm selection:bg-blue-500 selection:text-white"
                       required
                     />
                   </div>
@@ -220,7 +220,7 @@ const SellBook = () => {
                       placeholder="Enter college/school/organization name"
                       value={organizations}
                       onChange={(e) => setOrganization(e.target.value)}
-                      className="pl-10 text-sm"
+                      className="pl-10 text-sm selection:bg-blue-500 selection:text-white"
                       required
                     />
                   </div>
@@ -236,15 +236,14 @@ const SellBook = () => {
                     <Input
                       id="class"
                       type="text"
-                      placeholder="Enter Class eg., BSc,BCA,12th"
+                      placeholder="Enter Class eg., BSc, BCA, 12th"
                       value={className}
                       onChange={(e) => setClassName(e.target.value)}
-                      className="pl-10 text-sm"
+                      className="pl-10 text-sm selection:bg-blue-500 selection:text-white"
                       required
                     />
                   </div>
                 </div>
-
                 {/* Semester */}
                 <div className="space-y-2">
                   <Label htmlFor="semester" className="text-sm">
@@ -252,32 +251,31 @@ const SellBook = () => {
                   </Label>
                   <div className="relative">
                     <Calendar className="absolute left-3 top-1/2 transform -translate-y-1/2 text-slate-500 h-4 w-4" />
-                    <input
+                    <Input
                       list="semesters"
                       id="semester"
-                      placeholder="Select Semester"
+                      type="text"
+                      placeholder="Select or type semester (e.g., 1st, 2nd, or N/A)"
                       value={semester}
                       onChange={(e) => setSemester(e.target.value)}
-                      className="pl-10 pr-3 py-2 w-full text-sm rounded-md border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-950 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2"
+                      className="pl-10 text-sm selection:bg-blue-500 selection:text-white"
                       required
                     />
                     <datalist id="semesters">
-                      {[
-                        "1st",
-                        "2nd",
-                        "3rd",
-                        "4th",
-                        "5th",
-                        "6th",
-                        "7th",
-                        "8th",
-                      ].map((num) => (
-                        <option key={num} value={num}>
-                          {num}
-                        </option>
-                      ))}
+                      <option value="N/A">Not Applicable (School/Other)</option>
+                      <option value="1st">1st Semester</option>
+                      <option value="2nd">2nd Semester</option>
+                      <option value="3rd">3rd Semester</option>
+                      <option value="4th">4th Semester</option>
+                      <option value="5th">5th Semester</option>
+                      <option value="6th">6th Semester</option>
+                      <option value="7th">7th Semester</option>
+                      <option value="8th">8th Semester</option>
                     </datalist>
                   </div>
+                  <p className="text-xs text-slate-500">
+                    Select from dropdown or type custom value. Use "N/A" if books belong to schools or other organizations.
+                  </p>
                 </div>
 
                 {/* Price */}
@@ -293,7 +291,7 @@ const SellBook = () => {
                       placeholder="Enter price"
                       value={price}
                       onChange={(e) => setPrice(e.target.value)}
-                      className="pl-10 text-sm"
+                      className="pl-10 text-sm selection:bg-blue-500 selection:text-white"
                       required
                       min="0"
                       step="1"
