@@ -5,54 +5,11 @@ const SaveMoneySection = () => {
   <div className="max-w-6xl mx-auto text-center px-6">
     {/* Main Heading */}
     <h2 className="text-4xl md:text-5xl font-extrabold mb-4 text-gray-900">
-      How Do We <span className="text-blue-900">Save Your Money?</span>
+      How Do We <span className="text-orange-500">Save Your Money?</span>
     </h2>
     <p className="text-lg text-gray-600 mb-12 max-w-2xl mx-auto">
       We cut out the middleman so students save more when buying and earn more when selling — a true win-win.
     </p>
-
-    {/* Benefit Cards */}
-    <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-16">
-      {/* Card 1 */}
-      <div className="bg-white shadow-lg rounded-xl p-6 border hover:shadow-xl transition">
-        <div className="flex justify-center mb-4">
-          <span className="bg-green-100 text-green-600 p-3 rounded-full text-3xl">
-            💲
-          </span>
-        </div>
-        <h3 className="text-xl font-bold mb-2">Better Prices</h3>
-        <p className="text-gray-600">
-          Both buyers and sellers get better deals by cutting out the middleman.
-        </p>
-      </div>
-
-      {/* Card 2 */}
-      <div className="bg-white shadow-lg rounded-xl p-6 border hover:shadow-xl transition">
-        <div className="flex justify-center mb-4">
-          <span className="bg-blue-100 text-blue-600 p-3 rounded-full text-3xl">
-            👥
-          </span>
-        </div>
-        <h3 className="text-xl font-bold mb-2">Community</h3>
-        <p className="text-gray-600">
-          Connect with students from your own institution for trusted transactions.
-        </p>
-      </div>
-
-      {/* Card 3 */}
-      <div className="bg-white shadow-lg rounded-xl p-6 border hover:shadow-xl transition">
-        <div className="flex justify-center mb-4">
-          <span className="bg-orange-100 text-orange-600 p-3 rounded-full text-3xl">
-            ♻️
-          </span>
-        </div>
-        <h3 className="text-xl font-bold mb-2">Sustainable</h3>
-        <p className="text-gray-600">
-          Reduce waste by giving books a second life with fellow students.
-        </p>
-      </div>
-    </div>
-
     {/* Comparison Chart */}
     <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
       {/* Traditional */}

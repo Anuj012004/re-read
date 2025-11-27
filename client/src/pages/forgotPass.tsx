@@ -81,12 +81,12 @@ const ForgotPassword = () => {
                 </CardContent>
 
                 <CardFooter className="flex flex-col space-y-4">
-                  <Button type="submit" className="w-full" disabled={isLoading}>
+                  <Button type="submit" className="w-full cursor-pointer mt-3 bg-orange-100 hover:bg-orange-200 disabled:bg-orange-300" disabled={isLoading}>
                     {isLoading ? "Sending..." : "Send Reset Link"}
                   </Button>
                   
                   <Link to="/login" className="w-full">
-                    <Button variant="ghost" className="w-full">
+                    <Button variant="ghost" className="w-full cursor-pointer bg-orange-100 hover:bg-orange-200">
                       <ArrowLeft className="h-4 w-4 mr-2" />
                       Back to Login
                     </Button>
@@ -110,7 +110,7 @@ const ForgotPassword = () => {
                   </p>
                 </div>
                 <div className="space-y-2 pt-4">
-                  <Button onClick={() => setEmailSent(false)} variant="outline" className="w-full">
+                  <Button onClick={() => setEmailSent(false)} variant="default" className="w-full bg-orange-100 hover:bg-orange-200 cursor-pointer">
                     Resend Email
                   </Button>
                   <Link to="/login" className="block">

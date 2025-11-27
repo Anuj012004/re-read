@@ -127,7 +127,7 @@ const Login = () => {
                       placeholder="Enter your email"
                       value={formData.email}
                       onChange={(e) => handleInputChange('email', e.target.value)}
-                      className="pl-10 text-sm"
+                      className="selection:bg-blue-500 selection:text-white pl-10 text-sm" 
                       required
                     />
                   </div>
@@ -152,7 +152,7 @@ const Login = () => {
                       placeholder="Enter your password"
                       value={formData.password}
                       onChange={(e) => handleInputChange('password', e.target.value)}
-                      className="pl-10 pr-10 text-sm"
+                      className="pl-10 pr-10 text-sm selection:bg-blue-500 selection:text-white"
                       required
                     />
                     <button
@@ -165,7 +165,7 @@ const Login = () => {
                   </div>
                 </div>
 
-                {/* Remember Me */}
+                {/* Remember Me
                 <div className="flex items-center space-x-2">
                   <input 
                     id="remember" 
@@ -175,10 +175,10 @@ const Login = () => {
                   <Label htmlFor="remember" className="text-xs sm:text-sm cursor-pointer">
                     Remember me
                   </Label>
-                </div>
+                </div> */}
               </CardContent>
 
-              <CardFooter className="flex flex-col space-y-4 px-4 sm:px-6">
+              <CardFooter className="flex flex-col space-y-4 px-4 sm:px-6 mt-4">
                 <Button 
                   type="submit" 
                   className="w-full" 
@@ -194,7 +194,7 @@ const Login = () => {
           <div className="text-center px-4">
             <p className="text-muted-foreground text-sm">
               Don't have an account?{' '}
-              <Link to="/register" className="text-primary hover:underline font-medium">
+              <Link to="/signup" className="text-primary hover:underline font-medium">
                 Create account
               </Link>
             </p>

@@ -81,12 +81,12 @@ const ResendVerification = () => {
                 </CardContent>
 
                 <CardFooter className="flex flex-col space-y-4">
-                  <Button type="submit" className="w-full" disabled={isLoading}>
+                  <Button type="submit" className="w-full mt-3 bg-orange-300 hover:bg-orange-200 disabled:bg-orange-300 cursor-pointer" disabled={isLoading}>
                     {isLoading ? "Sending..." : "Resend Verification Email"}
                   </Button>
                   
                   <Link to="/login" className="w-full">
-                    <Button variant="ghost" className="w-full">
+                    <Button variant="ghost" className="w-full cursor-pointer">
                       <ArrowLeft className="h-4 w-4 mr-2" />
                       Back to Login
                     </Button>

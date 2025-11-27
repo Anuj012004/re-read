@@ -53,7 +53,7 @@ const Register = () => {
     }
 
     try {
-      const response: RegisterResponse = await registerUser(formData.name, formData.email, formData.password);
+      const response: RegisterResponse = await registerUser(formData.name, formData.email, formData.password, formData.confirmPassword);
       
       if (response.success) {
         toast.success(response.message);
@@ -159,7 +159,7 @@ const Register = () => {
                       placeholder="Enter your full name"
                       value={formData.name}
                       onChange={(e) => handleInputChange('name', e.target.value)}
-                      className="pl-10 text-sm"
+                      className="pl-10 text-sm selection:bg-blue-500 selection:text-white"
                       required
                     />
                   </div>
@@ -176,7 +176,7 @@ const Register = () => {
                       placeholder="Enter your email"
                       value={formData.email}
                       onChange={(e) => handleInputChange('email', e.target.value)}
-                      className="pl-10 text-sm"
+                      className="pl-10 text-sm selection:bg-blue-500 selection:text-white" 
                       required
                     />
                   </div>
@@ -193,7 +193,7 @@ const Register = () => {
                       placeholder="Create a strong password"
                       value={formData.password}
                       onChange={(e) => handleInputChange('password', e.target.value)}
-                      className="pl-10 pr-10 text-sm"
+                      className="pl-10 pr-10 text-sm selection:bg-blue-500 selection:text-white" 
                       required
                     />
                     <button
@@ -218,7 +218,7 @@ const Register = () => {
                       placeholder="Confirm your password"
                       value={formData.confirmPassword}
                       onChange={(e) => handleInputChange('confirmPassword', e.target.value)}
-                      className="pl-10 pr-10 text-sm"
+                      className="pl-10 pr-10 text-sm selection:bg-blue-500 selection:text-white" 
                       required
                     />
                     <button
@@ -230,19 +230,9 @@ const Register = () => {
                     </button>
                   </div>
                 </div>
-
-                {/* Terms */}
-                <div className="flex items-start space-x-2 pt-2">
-                  <input id="terms" type="checkbox" className="mt-1 rounded border-border" required />
-                  <Label htmlFor="terms" className="text-xs sm:text-sm leading-relaxed">
-                    I agree to the{' '}
-                    <Link to="/terms" className="text-primary hover:underline">Terms of Service</Link>{' '}and{' '}
-                    <Link to="/privacy" className="text-primary hover:underline">Privacy Policy</Link>
-                  </Label>
-                </div>
               </CardContent>
 
-              <CardFooter className="flex flex-col space-y-4 px-4 sm:px-6">
+              <CardFooter className="flex flex-col space-y-4 px-4 sm:px-6 mt-4">
                 <Button type="submit" className="w-full" variant="hero" disabled={isLoading}>
                   {isLoading ? "Creating Account..." : "Create Account"}
                 </Button>

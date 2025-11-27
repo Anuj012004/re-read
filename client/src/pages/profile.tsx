@@ -90,7 +90,7 @@ const ProfilePage = () => {
       setLoading(true);
       setError(null);
 
-      const res = await api.get("/books/my-books");
+      const res = await api.get("/api/books/my-books");
 
       // Populate seller field if missing
       const booksWithSeller = (res.data.books || []).map((book: any) => ({
@@ -118,7 +118,7 @@ const ProfilePage = () => {
 
     try {
       setIsDeleting(true);
-      await api.delete(`/books/${deleteBookId}`);
+      await api.delete(`/api/books/${deleteBookId}`);
 
       setMyBooks((prev) => prev.filter((b) => b._id !== deleteBookId));
       toast.success("Book deleted successfully");
@@ -277,7 +277,7 @@ const ProfilePage = () => {
 
       {/* Delete Confirmation Dialog */}
       <AlertDialog open={!!deleteBookId} onOpenChange={(open) => !open && setDeleteBookId(null)}>
-        <AlertDialogContent>
+        <AlertDialogContent className="bg-white">
           <AlertDialogHeader>
             <AlertDialogTitle>Delete Book</AlertDialogTitle>
             <AlertDialogDescription>
@@ -285,11 +285,11 @@ const ProfilePage = () => {
             </AlertDialogDescription>
           </AlertDialogHeader>
           <AlertDialogFooter>
-            <AlertDialogCancel disabled={isDeleting}>Cancel</AlertDialogCancel>
+            <AlertDialogCancel className="cursor-pointer" disabled={isDeleting}>Cancel</AlertDialogCancel>
             <AlertDialogAction
               onClick={handleDeleteConfirm}
               disabled={isDeleting}
-              className="bg-red-500 hover:bg-red-600"
+              className="bg-red-500 hover:bg-red-600 cursor-pointer"
             >
               {isDeleting ? (
                 <>

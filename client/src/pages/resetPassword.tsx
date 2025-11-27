@@ -134,7 +134,7 @@ const ResetPassword = () => {
               </CardContent>
 
               <CardFooter className="flex flex-col space-y-4">
-                <Button type="submit" className="w-full" disabled={isLoading}>
+                <Button type="submit" className="w-full cursor-pointer bg-orange-100 hover:bg-orange-200 disabled:bg-orange-300" disabled={isLoading}>
                   {isLoading ? "Resetting Password..." : "Reset Password"}
                 </Button>
                 
