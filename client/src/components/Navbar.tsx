@@ -29,7 +29,7 @@ export default function Navbar() {
       <div className="max-w-[1280px] mx-auto px-6 sm:px-10 lg:px-20 py-3 flex items-center justify-between">
         {/* Logo */}
         <div className="flex items-center gap-2">
-          <Book className="text-orange-400" size={28} />
+          <Book className="text-black" size={28} />
           <span
             className="text-lg font-bold text-black cursor-pointer"
             onClick={() => navigate("/")}

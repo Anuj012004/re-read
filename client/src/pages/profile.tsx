@@ -266,7 +266,7 @@ const ProfilePage = () => {
               <p className="text-muted-foreground mb-4">
                 Start by uploading your first book to share with others!
               </p>
-              <Button onClick={() => navigate("/upload")}>
+              <Button onClick={() => navigate("/sellbook")}>
                 <BookOpen className="h-4 w-4 mr-2" />
                 Upload Your First Book
               </Button>
