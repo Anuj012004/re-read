@@ -6,7 +6,7 @@ import { useAuth } from "@/hooks/authContext";
 export default function Navbar() {
   const [isOpen, setIsOpen] = useState(false);
   const [isLoggingOut, setIsLoggingOut] = useState(false);
-  const { user, logout, loading } = useAuth();
+  const { user, logout } = useAuth();
   const navigate = useNavigate();
 
   const handleLogout = async () => {
@@ -20,9 +20,6 @@ export default function Navbar() {
       setIsLoggingOut(false);
     }
   };
-
-  // Show auth buttons immediately if not in initial loading state
-  const showAuthButtons = !loading || user !== null;
 
   return (
     <nav className="bg-white shadow-md">
@@ -57,9 +54,7 @@ export default function Navbar() {
 
         {/* Desktop Auth */}
         <div className="hidden md:flex items-center gap-4 min-w-[180px] justify-end">
-          {!showAuthButtons ? (
-            <Loader2 size={20} className="animate-spin text-blue-900" />
-          ) : user ? (
+          {user ? (
             <>
               <button
                 onClick={handleLogout}
@@ -71,11 +66,10 @@ export default function Navbar() {
               </button>
               <Link
                 to="/profile"
-                className="flex items-center gap-2 bg-orange-400 text-black px-4 py-2 rounded-full py-2 px-4 hover:bg-orange-300 transition-colors ml-5"
+                className="flex items-center gap-2 bg-orange-400 text-black px-4 py-2 rounded-full hover:bg-orange-300 transition-colors ml-5"
               >
                 <User size={18} />
                 Profile
-                
               </Link>
             </>
           ) : (
@@ -88,7 +82,7 @@ export default function Navbar() {
               </Link>
               <Link
                 to="/signup"
-              className="bg-orange-400 text-black px-4 py-2 rounded-full hover:bg-orange-500 transition-all transform hover:scale-105 hover:shadow-2xl shadow-lg"
+                className="bg-orange-400 text-black px-4 py-2 rounded-full hover:bg-orange-500 transition-all transform hover:scale-105 hover:shadow-2xl shadow-lg"
               >
                 Sign Up
               </Link>
@@ -126,12 +120,7 @@ export default function Navbar() {
             About Us
           </Link>
 
-          {!showAuthButtons ? (
-            <div className="flex items-center gap-2 text-orange-900">
-              <Loader2 size={18} className="animate-spin" />
-              Loading...
-            </div>
-          ) : user ? (
+          {user ? (
             <>
               <button
                 onClick={() => {
