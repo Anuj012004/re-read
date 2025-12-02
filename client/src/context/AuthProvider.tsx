@@ -10,11 +10,14 @@ interface AuthProviderProps {
 
 export default function AuthProvider({ children }: AuthProviderProps) {
   const [user, setUser] = useState<User | null>(null);
-  const [loading, setLoading] = useState(true);
+  const [loading, setLoading] = useState(false);
+  const [initialCheckDone, setInitialCheckDone] = useState(false);
 
   const refreshUser = async () => {
     try {
+      if (initialCheckDone) {
       setLoading(true);
+    }
       const currentUser = await getCurrentUser();
 
       if (currentUser?.name && currentUser?.email) {
@@ -26,6 +29,7 @@ export default function AuthProvider({ children }: AuthProviderProps) {
       setUser(null);
     } finally {
       setLoading(false);
+      setInitialCheckDone(true);
     }
   };
 
@@ -65,7 +69,7 @@ export default function AuthProvider({ children }: AuthProviderProps) {
   }, []);
 
   return (
-    <AuthContext.Provider value={{ user, loading, login, logout, refreshUser }}>
+    <AuthContext.Provider value={{ user, loading:loading && initialCheckDone, login, logout, refreshUser }}>
       {children}
     </AuthContext.Provider>
   );
