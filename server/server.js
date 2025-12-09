@@ -8,8 +8,9 @@ const passport = require('passport');
 const cookieParser = require('cookie-parser');
 const authRoutes = require('./routes/authRoutes');
 const bookRoutes = require('./routes/bookRoutes');
-const { config } = require('dotenv');
 require('dotenv').config({ path: "./config/.env" });
+const { config } = require('dotenv');
+
 require("./config/passport");
 const PORT = process.env.PORT
 const FRONTEND_URL = process.env.NODE_ENV === 'production' 
