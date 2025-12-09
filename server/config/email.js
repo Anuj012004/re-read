@@ -1,131 +1,139 @@
-const nodemailer = require('nodemailer');
+const SibApiV3Sdk = require('@sendinblue/client');
 
-// Create reusable transporter
-const createTransporter = () => {
-  // Note: In nodemailer 7.x, the method is createTransport (not createTransporter)
-  return nodemailer.createTransport({
-    service: 'gmail', // or 'outlook', 'yahoo', etc.
-    auth: {
-      user: process.env.EMAIL_USER, // your email
-      pass: process.env.EMAIL_PASSWORD // your app password
-    }
-  });
+// Initialize Brevo API client
+const initializeBrevoClient = () => {
+  const apiInstance = new SibApiV3Sdk.TransactionalEmailsApi();
+  const apiKey = apiInstance.authentications['apiKey'];
+  apiKey.apiKey = process.env.BREVO_API_KEY;
+  return apiInstance;
 };
 
 // Send verification email
 const sendVerificationEmail = async (email, name, verificationToken) => {
-  const transporter = createTransporter();
-  
+  const apiInstance = initializeBrevoClient();
   const verificationUrl = `${process.env.FRONTEND_URL}/verify-email/${verificationToken}`;
   
-  const mailOptions = {
-    from: `"RE-READ" <${process.env.EMAIL_USER}>`,
-    to: email,
-    subject: 'Verify Your Email - RE-READ',
-    html: `
-      <!DOCTYPE html>
-      <html>
-        <head>
-          <style>
-            body { font-family: Arial, sans-serif; line-height: 1.6; color: #333; }
-            .container { max-width: 600px; margin: 0 auto; padding: 20px; }
-            .header { background: linear-gradient(135deg, #3b82f6 0%, #a855f7 100%); color: white; padding: 30px; text-align: center; border-radius: 10px 10px 0 0; }
-            .content { background: #f9fafb; padding: 30px; border-radius: 0 0 10px 10px; }
-            .button { display: inline-block; padding: 12px 30px; background: linear-gradient(135deg, #3b82f6 0%, #a855f7 100%); color: white; text-decoration: none; border-radius: 5px; margin: 20px 0; }
-            .footer { text-align: center; margin-top: 20px; color: #666; font-size: 12px; }
-          </style>
-        </head>
-        <body>
-          <div class="container">
-            <div class="header">
-              <h1>Welcome to RE-READ!</h1>
-            </div>
-            <div class="content">
-              <p>Hi ${name},</p>
-              <p>Thank you for registering with RE-READ. Please verify your email address to activate your account.</p>
-              <div style="text-align: center;">
-                <a href="${verificationUrl}" class="button">Verify Email Address</a>
-              </div>
-              <p>Or copy and paste this link in your browser:</p>
-              <p style="word-break: break-all; color: #3b82f6;">${verificationUrl}</p>
-              <p><strong>This link will expire in 24 hours.</strong></p>
-              <p>If you didn't create an account, please ignore this email.</p>
-            </div>
-            <div class="footer">
-              <p>&copy; 2025 RE-READ. All rights reserved.</p>
-            </div>
-          </div>
-        </body>
-      </html>
-    `
+  const sendSmtpEmail = new SibApiV3Sdk.SendSmtpEmail();
+  
+  sendSmtpEmail.sender = { 
+    name: "RE-READ", 
+    email: process.env.BREVO_SENDER_EMAIL 
   };
+  sendSmtpEmail.to = [{ email: email, name: name }];
+  sendSmtpEmail.subject = "Verify Your Email - RE-READ";
+  sendSmtpEmail.htmlContent = `
+    <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto; padding: 20px;">
+      <div style="background-color: #4CAF50; color: white; padding: 20px; text-align: center; border-radius: 8px 8px 0 0;">
+        <h1 style="margin: 0;">Welcome to RE-READ!</h1>
+      </div>
+      
+      <div style="background-color: #f9f9f9; padding: 30px; border-radius: 0 0 8px 8px;">
+        <p style="font-size: 16px; color: #333;">Hi <strong>${name}</strong>,</p>
+        
+        <p style="font-size: 14px; color: #666; line-height: 1.6;">
+          Thank you for registering with RE-READ! We're excited to have you on board.
+          Please verify your email address to activate your account.
+        </p>
+        
+        <div style="text-align: center; margin: 30px 0;">
+          <a href="${verificationUrl}" 
+             style="background-color: #4CAF50; color: white; padding: 14px 32px; 
+                    text-decoration: none; border-radius: 6px; display: inline-block;
+                    font-weight: bold; font-size: 16px;">
+            Verify Email Address
+          </a>
+        </div>
+        
+        <p style="font-size: 12px; color: #999; margin-top: 20px;">
+          Or copy and paste this link into your browser:
+        </p>
+        <p style="font-size: 12px; color: #4CAF50; word-break: break-all;">
+          ${verificationUrl}
+        </p>
+        
+        <hr style="margin: 30px 0; border: none; border-top: 1px solid #ddd;">
+        
+        <p style="font-size: 11px; color: #999; text-align: center;">
+          If you didn't create an account with RE-READ, please ignore this email.
+        </p>
+      </div>
+    </div>
+  `;
 
   try {
-    await transporter.sendMail(mailOptions);
-    console.log('Verification email sent to:', email);
+    const data = await apiInstance.sendTransacEmail(sendSmtpEmail);
+    console.log('Verification email sent successfully:', data.messageId);
+    return data;
   } catch (error) {
-    console.error('Error sending verification email:', error);
+    console.error('Brevo API Error:', error);
     throw new Error('Failed to send verification email');
   }
 };
 
 // Send password reset email
 const sendPasswordResetEmail = async (email, name, resetToken) => {
-  const transporter = createTransporter();
+  const apiInstance = initializeBrevoClient();
+  const resetUrl = `${process.env.FRONTEND_URL}/reset-password/${resetToken}`;
   
-  // IMPORTANT: Use /reset-password NOT /verify-email
-  const resetUrl = `${process.env.FRONTEND_URL}/reset-password/${resetToken}`;  
-  const mailOptions = {
-    from: `"RE-READ" <${process.env.EMAIL_USER}>`,
-    to: email,
-    subject: 'Password Reset Request - RE-READ',
-    html: `
-      <!DOCTYPE html>
-      <html>
-        <head>
-          <style>
-            body { font-family: Arial, sans-serif; line-height: 1.6; color: #333; }
-            .container { max-width: 600px; margin: 0 auto; padding: 20px; }
-            .header { background: linear-gradient(135deg, #3b82f6 0%, #a855f7 100%); color: white; padding: 30px; text-align: center; border-radius: 10px 10px 0 0; }
-            .content { background: #f9fafb; padding: 30px; border-radius: 0 0 10px 10px; }
-            .button { display: inline-block; padding: 12px 30px; background: linear-gradient(135deg, #3b82f6 0%, #a855f7 100%); color: white; text-decoration: none; border-radius: 5px; margin: 20px 0; }
-            .warning { background: #fef2f2; border-left: 4px solid #ef4444; padding: 15px; margin: 20px 0; }
-            .footer { text-align: center; margin-top: 20px; color: #666; font-size: 12px; }
-          </style>
-        </head>
-        <body>
-          <div class="container">
-            <div class="header">
-              <h1>Password Reset Request</h1>
-            </div>
-            <div class="content">
-              <p>Hi ${name},</p>
-              <p>We received a request to reset your password for your RE-READ account.</p>
-              <div style="text-align: center;">
-                <a href="${resetUrl}" class="button">Reset Password</a>
-              </div>
-              <p>Or copy and paste this link in your browser:</p>
-              <p style="word-break: break-all; color: #3b82f6;">${resetUrl}</p>
-              <p><strong>This link will expire in 1 hour.</strong></p>
-              <div class="warning">
-                <p><strong>⚠️ Security Notice:</strong></p>
-                <p>If you didn't request a password reset, please ignore this email and your password will remain unchanged.</p>
-              </div>
-            </div>
-            <div class="footer">
-              <p>&copy; 2025 RE-READ. All rights reserved.</p>
-            </div>
-          </div>
-        </body>
-      </html>
-    `
+  const sendSmtpEmail = new SibApiV3Sdk.SendSmtpEmail();
+  
+  sendSmtpEmail.sender = { 
+    name: "RE-READ", 
+    email: process.env.BREVO_SENDER_EMAIL 
   };
+  sendSmtpEmail.to = [{ email: email, name: name }];
+  sendSmtpEmail.subject = "Password Reset Request - RE-READ";
+  sendSmtpEmail.htmlContent = `
+    <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto; padding: 20px;">
+      <div style="background-color: #2196F3; color: white; padding: 20px; text-align: center; border-radius: 8px 8px 0 0;">
+        <h1 style="margin: 0;">Password Reset Request</h1>
+      </div>
+      
+      <div style="background-color: #f9f9f9; padding: 30px; border-radius: 0 0 8px 8px;">
+        <p style="font-size: 16px; color: #333;">Hi <strong>${name}</strong>,</p>
+        
+        <p style="font-size: 14px; color: #666; line-height: 1.6;">
+          We received a request to reset your password. Click the button below to create a new password:
+        </p>
+        
+        <div style="text-align: center; margin: 30px 0;">
+          <a href="${resetUrl}" 
+             style="background-color: #2196F3; color: white; padding: 14px 32px; 
+                    text-decoration: none; border-radius: 6px; display: inline-block;
+                    font-weight: bold; font-size: 16px;">
+            Reset Password
+          </a>
+        </div>
+        
+        <p style="font-size: 12px; color: #999; margin-top: 20px;">
+          Or copy and paste this link into your browser:
+        </p>
+        <p style="font-size: 12px; color: #2196F3; word-break: break-all;">
+          ${resetUrl}
+        </p>
+        
+        <div style="background-color: #fff3cd; border-left: 4px solid #ffc107; padding: 12px; margin: 20px 0;">
+          <p style="margin: 0; color: #856404; font-size: 13px;">
+            ⚠️ <strong>Important:</strong> This link will expire in 1 hour for security reasons.
+          </p>
+        </div>
+        
+        <hr style="margin: 30px 0; border: none; border-top: 1px solid #ddd;">
+        
+        <p style="font-size: 11px; color: #999; text-align: center;">
+          If you didn't request a password reset, please ignore this email.<br>
+          Your password will remain unchanged.
+        </p>
+      </div>
+    </div>
+  `;
 
   try {
-    await transporter.sendMail(mailOptions);
-    console.log('Password reset email sent to:', email);
+    const data = await apiInstance.sendTransacEmail(sendSmtpEmail);
+    console.log('Password reset email sent successfully:', data.messageId);
+    return data;
   } catch (error) {
-    console.error('Error sending password reset email:', error);
+    console.error('Brevo API Error:', error);
     throw new Error('Failed to send password reset email');
   }
 };
