@@ -116,7 +116,7 @@ The application should now be running:
 
 **Note:** Render's free tier blocks Nodemailer's default SMTP. This project uses Brevo's API instead.
 
-### Frontend (Vercel/Netlify)
+### Frontend (Render static site)
 
 1. Connect your repository
 2. Set build command: `npm run build`
