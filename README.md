@@ -152,8 +152,8 @@ Contributions are welcome! Please follow these steps:
 
 ## Contact
 
-Your Name - anuj01062004@gmail.com
+email : anuj01062004@gmail.com
 
-Project Link: https://github.com/anuj012004/re-read
+Project Link: https://reread.onrender.com
 
 ---
