@@ -1,0 +1,47 @@
+services:
+  mongo:
+    image: mongo:7
+    container_name: reread-mongo
+    restart: unless-stopped
+    volumes:
+      - mongo-data:/data/db
+    ports:
+      - "27017:27017"
+    networks:
+      - reread_network
+
+  server:
+    build: ./server
+    container_name: reread-server
+    restart: unless-stopped
+    env_file:
+      - ./server/config/.env
+    environment:
+      - DB_STRING=mongodb://mongo:27017/reread
+    depends_on:
+      - mongo
+    ports:
+      - "2121:2121"
+    networks:
+      - reread_network
+
+  client:
+    build:
+      context: ./client
+      args:
+        VITE_API_URL: http://localhost:2121
+    container_name: reread-client
+    restart: unless-stopped
+    depends_on:
+      - server
+    ports:
+      - "5173:80"
+    networks:
+      - reread_network
+
+networks:
+  reread_network:
+    driver: bridge
+
+volumes:
+  mongo-data:
