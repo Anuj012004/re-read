@@ -1,0 +1,35 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: server
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: server
+  template:
+    metadata:
+      labels:
+        app: server
+    spec:
+      containers:
+        - name: server
+          image: anujx01/reread-server:latest
+          ports:
+            - containerPort: 2121
+          env:
+            - name: DB_STRING
+              value: "mongodb://mongo:27017/reread"
+            - name: PORT
+              value: "2121"
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: server
+spec:
+  selector:
+    app: server
+  ports:
+    - port: 2121
+      targetPort: 2121
